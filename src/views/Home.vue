@@ -1,18 +1,33 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div v-if="tasks.length>0" class="tasks">
+      <h3>List Of Tasks</h3>
+      <task-item v-for="(task,index) in tasks" :task="task" :index="index" :key="index"></task-item>
+    </div>
+    <div v-else><h2>No Tasks available.</h2></div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import TaskItem from '../components/TaskItem.vue'
+import { mapState} from 'vuex'
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    TaskItem
+  },
+  computed: {
+    ...mapState(["tasks"])
+  },
+  methods: {
   }
 }
 </script>
+<style scoped>
+  .tasks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+</style>
